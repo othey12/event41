@@ -30,7 +30,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV PORT 3000
 
 # Create user
-RUN addgroup --gid 1001 nodejs && adduser --uid 1001 --gid 1001 --disabled-password --gecos "" nextjs
+RUN addgroup --gid 1001 nodejs && adduser --uid 1001 --gid 1001 --disabled-password --gecos "\" nextjs
 
 # Copy node_modules
 COPY --from=builder /app/node_modules ./node_modules
