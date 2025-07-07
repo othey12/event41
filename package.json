@@ -7,7 +7,7 @@
     "build": "next build && npm run build:worker",
     "start": "node server.js",
     "lint": "next lint",
-    "build:worker": "tsc -p tsconfig.worker.json"
+    "build:worker": "npx tsc -p tsconfig.worker.json"
   },
   "dependencies": {
     "@json2csv/node": "^7.0.6",

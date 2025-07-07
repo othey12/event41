@@ -9,7 +9,6 @@ RUN rm -rf node_modules package-lock.json && npm install
 COPY . .
 # Install dependency build untuk canvas & sharp
 RUN apt-get update && apt-get install -y python3 make g++ libvips-dev libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev && ln -sf /usr/bin/python3 /usr/bin/python && npm install
-# Install dependencies (pastikan semua yang dibutuhkan)
 
 # Build
 FROM base AS builder
@@ -17,7 +16,10 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # DEBUG: print build script to verify correct package.json
 RUN cat package.json | grep "\"build\""
+# Build Next.js app
 RUN npm run build
+# Build worker files
+RUN npx tsc -p tsconfig.worker.json
 
 # Runner
 FROM node:18 AS runner
@@ -58,5 +60,5 @@ USER nextjs
 
 EXPOSE 3000
 
-# Start both web server dan worker Bull secara paralel
-CMD pm2 start server.js --name web && pm2 start dist/src/jobs/certificateMultiWorker.js --name worker && pm2 logs
+# Start web server only (worker is optional)
+CMD ["pm2-runtime", "start", "server.js", "--name", "web"]

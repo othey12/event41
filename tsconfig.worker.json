@@ -6,10 +6,20 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "rootDir": "src"
+    "target": "ES2020",
+    "module": "CommonJS",
+    "rootDir": ".",
+    "declaration": false,
+    "sourceMap": false,
+    "skipLibCheck": true
   },
   "include": [
     "src/jobs/**/*",
     "src/lib/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".next"
   ]
-} 
+}
